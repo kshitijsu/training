@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30330.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItronBankRESTFulService", "ItronBankRESTFulService\ItronBankRESTFulService.csproj", "{6DFC3C36-856F-4C38-B7DF-5028125B744A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DFC3C36-856F-4C38-B7DF-5028125B744A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DFC3C36-856F-4C38-B7DF-5028125B744A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DFC3C36-856F-4C38-B7DF-5028125B744A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DFC3C36-856F-4C38-B7DF-5028125B744A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {234C5CE6-1A40-4B18-9AA8-0C11409FBC8E}
+	EndGlobalSection
+EndGlobal

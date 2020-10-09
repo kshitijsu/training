@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ItronBankDb2020Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BankTransaction">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountId" Type="Int32" Nullable="false" />
+    <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TransDateTime" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TransDesc" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Debit" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Credit" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="ItronBankDb2020Model.FK_BankTransactions_ToAccounts" FromRole="BankTransaction" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerNo" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="pincode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="EMailID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Customer_ToUsers" FromRole="Customers" ToRole="Users" />
+    <NavigationProperty Name="Accounts" Relationship="ItronBankDb2020Model.FK_Accounts_ToCustomers" FromRole="Customer" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_ToUsers" FromRole="Users" ToRole="Customers" />
+  </EntityType>
+  <Association Name="FK_Customer_ToUsers">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ItronBankDb2020Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BankTransactions" EntityType="Self.BankTransaction" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Customer_ToUsers" Association="Self.FK_Customer_ToUsers">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <EntitySet Name="Accounts" EntityType="ItronBankDb2020Model.Account" />
+    <AssociationSet Name="FK_Accounts_ToCustomers" Association="ItronBankDb2020Model.FK_Accounts_ToCustomers">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BankTransactions_ToAccounts" Association="ItronBankDb2020Model.FK_BankTransactions_ToAccounts">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="BankTransaction" EntitySet="BankTransactions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountId" />
+    </Key>
+    <Property Name="AccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AccountType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="DOO" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CurrentAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customer" Relationship="ItronBankDb2020Model.FK_Accounts_ToCustomers" FromRole="Account" ToRole="Customer" />
+    <NavigationProperty Name="BankTransactions" Relationship="ItronBankDb2020Model.FK_BankTransactions_ToAccounts" FromRole="Account" ToRole="BankTransaction" />
+  </EntityType>
+  <Association Name="FK_Accounts_ToCustomers">
+    <End Type="ItronBankDb2020Model.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="ItronBankDb2020Model.Account" Role="Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BankTransactions_ToAccounts">
+    <End Type="ItronBankDb2020Model.Account" Role="Account" Multiplicity="1" />
+    <End Type="ItronBankDb2020Model.BankTransaction" Role="BankTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="AccountId" />
+      </Principal>
+      <Dependent Role="BankTransaction">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
